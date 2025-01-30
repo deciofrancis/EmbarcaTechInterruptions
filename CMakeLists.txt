@@ -42,11 +42,20 @@ pico_set_program_version(EmbarcaTechInterruptions "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(EmbarcaTechInterruptions 0)
-pico_enable_stdio_usb(EmbarcaTechInterruptions 0)
+pico_enable_stdio_usb(EmbarcaTechInterruptions 1)
+
+# Generates pio.h file
+pico_generate_pio_header(EmbarcaTechInterruptions ${CMAKE_CURRENT_LIST_DIR}/EmbarcaTechInterruptions.pio)
+
+# Specifies the source files
+target_sources(EmbarcaTechInterruptions PRIVATE EmbarcaTechInterruptions.c)
 
 # Add the standard library to the build
 target_link_libraries(EmbarcaTechInterruptions
-        pico_stdlib)
+        pico_stdlib
+        hardware_pio
+        hardware_clocks
+        pico_bootrom)
 
 # Add the standard include files to the build
 target_include_directories(EmbarcaTechInterruptions PRIVATE
